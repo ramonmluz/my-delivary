@@ -8,13 +8,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
@@ -22,6 +30,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.com.android.mydeliveryapp.ui.theme.MyDeliveryAppTheme
+import br.com.android.mydeliveryapp.ui.theme.Purple500
+import br.com.android.mydeliveryapp.ui.theme.Teal200
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                   ProductItem()
+                    ProductItem()
                 }
             }
         }
@@ -49,23 +59,31 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
     MyDeliveryAppTheme {
-        Greeting("Android")
+        ProductItem()
     }
 }
 
-//@Preview(showBackground = true)
 @Composable
 fun ProductItem() {
-    Column {
+    Column(
+        Modifier
+            .width(200.dp)
+            .height(250.dp)
+    ) {
         Box(
             modifier = Modifier
-                .width(50.dp)
-                .height(50.dp)
-                .background(Color.Blue)
+                .height(100.dp)
+                .background(Brush.horizontalGradient(listOf(Purple500, Teal200)))
+                .fillMaxWidth()
         )
         Image(
             painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "image item"
+            contentDescription = "image item",
+            modifier = Modifier
+                .offset(y=(-50).dp)
+                .size(100.dp)
+                .clip(CircleShape)
+                .align(CenterHorizontally)
         )
 
         Text(text = "Text 1")
