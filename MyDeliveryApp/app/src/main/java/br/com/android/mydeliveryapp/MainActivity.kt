@@ -11,12 +11,14 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.withConsumedWindowInsets
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -37,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.createSavedStateHandle
 import br.com.android.mydeliveryapp.ui.theme.MyDeliveryAppTheme
 import br.com.android.mydeliveryapp.ui.theme.Purple500
 import br.com.android.mydeliveryapp.ui.theme.Teal200
@@ -48,8 +51,7 @@ class MainActivity : ComponentActivity() {
             MyDeliveryAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
                     ProductItem()
                 }
@@ -59,8 +61,46 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun ProductItem() {
+    Surface(Modifier.padding(8.dp), shape =  RoundedCornerShape(15.dp), elevation = 4.dp) {
+        Column(
+            Modifier
+                .heightIn(250.dp, 300.dp)
+                .width(200.dp)
+        ) {
+            val imageSize = 100.dp
+            Box(
+                modifier = Modifier
+                    .heightIn(100.dp)
+                    .background(Brush.horizontalGradient(listOf(Purple500, Teal200)))
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    contentDescription = "image item",
+                    modifier = Modifier
+                        .size(imageSize)
+                        .offset(y = imageSize/2)
+                        .clip(CircleShape)
+                        .align(Center)
+                )
+            }
+            Spacer(modifier = Modifier.height(imageSize/2))
+            Column(Modifier.padding(16.dp)) {
+                Text(
+                    text = LoremIpsum(50).values.first(),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight(700),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Text(
+                    text = "14,99", fontSize = 14.sp, fontWeight = FontWeight(400)
+                )
+            }
+        }
+    }
 }
 
 @Preview(showBackground = true)
@@ -68,48 +108,6 @@ fun Greeting(name: String) {
 fun DefaultPreview() {
     MyDeliveryAppTheme {
         ProductItem()
-    }
-}
-
-@Composable
-fun ProductItem() {
-    Column(
-        Modifier
-            .width(200.dp)
-            .height(250.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .height(100.dp)
-                .background(Brush.horizontalGradient(listOf(Purple500, Teal200)))
-                .fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
-                contentDescription = "image item",
-                modifier = Modifier
-                    .offset(y = 50.dp)
-                    .size(100.dp)
-                    .clip(CircleShape)
-                    .align(Center)
-            )
-        }
-        Spacer(modifier = Modifier.height(50.dp))
-        Column(Modifier.padding(16.dp)) {
-            Text(
-                text = LoremIpsum(50).values.first(),
-                fontSize = 18.sp,
-                fontWeight = FontWeight(700),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Text(
-                text = "14,99",
-                fontSize = 14.sp,
-                fontWeight = FontWeight(400)
-            )
-        }
     }
 }
 
