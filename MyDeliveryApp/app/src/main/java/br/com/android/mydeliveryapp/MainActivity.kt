@@ -5,8 +5,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +23,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -30,6 +34,7 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -62,8 +67,24 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ProductSection() {
     Column {
-        Text(text = "Promoções")
-        Row {
+        Text(
+            text = "Promoções",
+            Modifier.padding(start = 16.dp),
+            fontSize = 20.sp,
+            fontWeight = FontWeight(400)
+        )
+        Row(
+            Modifier
+                .padding(
+                    top = 8.dp,
+                    bottom = 16.dp
+                )
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+
+        ) {
             ProductItem()
             ProductItem()
             ProductItem()
@@ -73,7 +94,7 @@ fun ProductSection() {
 
 @Composable
 fun ProductItem() {
-    Surface(Modifier.padding(8.dp), shape = RoundedCornerShape(15.dp), elevation = 4.dp) {
+    Surface(shape = RoundedCornerShape(15.dp), elevation = 4.dp) {
         Column(
             Modifier
                 .heightIn(250.dp, 300.dp)
@@ -116,7 +137,7 @@ fun ProductItem() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ProductSectionPreview() {
     ProductSection()
