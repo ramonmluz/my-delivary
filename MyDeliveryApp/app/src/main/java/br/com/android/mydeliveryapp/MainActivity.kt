@@ -52,9 +52,21 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    ProductItem()
+                    ProductSection()
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun ProductSection() {
+    Column {
+        Text(text = "Promoções")
+        Row {
+            ProductItem()
+            ProductItem()
+            ProductItem()
         }
     }
 }
@@ -84,7 +96,9 @@ fun ProductItem() {
                         .align(Center)
                 )
             }
+
             Spacer(modifier = Modifier.height(imageSize / 2))
+
             Column(Modifier.padding(16.dp)) {
                 Text(
                     text = LoremIpsum(50).values.first(),
@@ -102,64 +116,18 @@ fun ProductItem() {
     }
 }
 
+@Preview
 @Composable
-fun ProductItemChallenge() {
-    Surface(Modifier.padding(8.dp), shape = RoundedCornerShape(15.dp), elevation = 4.dp) {
-        Row(
-            Modifier
-                .heightIn(200.dp, 200.dp)
-                .width(400.dp)
-        ) {
-            val imageSize = 100.dp
-            Box(
-                modifier = Modifier
-                    .background(Brush.verticalGradient(listOf(Purple700, Purple200)))
-                    .fillMaxHeight()
-                    .width(100.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                    contentDescription = "image item",
-
-                    modifier = Modifier
-                        .size(imageSize)
-                        .offset(x = imageSize / 2)
-                        .clip(CircleShape)
-                        .align(Center)
-                        .border(
-                            BorderStroke(
-                                2.dp,
-                                Brush.verticalGradient(listOf(Purple700, Purple200))
-                            ), CircleShape
-                        )
-                )
-            }
-            Spacer(modifier = Modifier.width(imageSize / 2))
-            Column(Modifier.padding(32.dp)) {
-                Text(
-                    text = LoremIpsum(50).values.first(),
-                    fontSize = 16.sp,
-                    maxLines = 6,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        }
-    }
+fun ProductSectionPreview() {
+    ProductSection()
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+private fun ProductItemPreview() {
     MyDeliveryAppTheme {
         ProductItem()
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ChallengePreview() {
-    MyDeliveryAppTheme {
-        ProductItemChallenge()
-    }
-}
 
