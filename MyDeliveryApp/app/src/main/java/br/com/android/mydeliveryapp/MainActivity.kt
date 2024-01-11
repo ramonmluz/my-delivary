@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -85,6 +86,7 @@ fun ProductSection() {
             horizontalArrangement = Arrangement.spacedBy(16.dp)
 
         ) {
+            ProductItemScroll()
             ProductItem()
             ProductItem()
             ProductItem()
@@ -137,6 +139,72 @@ fun ProductItem() {
     }
 }
 
+@Composable
+fun ProductItemScroll() {
+    var isThereDescription = true
+
+    Surface(shape = RoundedCornerShape(15.dp), elevation = 4.dp) {
+        Column(
+            Modifier
+                .heightIn(250.dp, 300.dp)
+                .width(200.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            val imageSize = 100.dp
+            Box(
+                modifier = Modifier
+                    .heightIn(100.dp)
+                    .background(Brush.horizontalGradient(listOf(Purple500, Teal200)))
+                    .fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                    contentDescription = "image item",
+                    modifier = Modifier
+                        .size(imageSize)
+                        .offset(y = imageSize / 2)
+                        .clip(CircleShape)
+                        .align(Center)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(imageSize / 2))
+
+            Column(Modifier.padding(16.dp)) {
+                Text(
+                    text = LoremIpsum(50).values.first(),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight(700),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Text(
+                    text = "14,99", fontSize = 14.sp, fontWeight = FontWeight(400)
+                )
+
+            }
+
+            if (isThereDescription) {
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .background(Purple500)
+                ) {
+                    Text(
+                        modifier = Modifier.padding(16.dp),
+                        text = LoremIpsum(50).values.first(),
+                        color = Color.White,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight(700)
+                    )
+                }
+            }
+
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun ProductSectionPreview() {
@@ -150,5 +218,14 @@ private fun ProductItemPreview() {
         ProductItem()
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductItemScrollPreview() {
+    MyDeliveryAppTheme {
+        ProductItemScroll()
+    }
+}
+
 
 
