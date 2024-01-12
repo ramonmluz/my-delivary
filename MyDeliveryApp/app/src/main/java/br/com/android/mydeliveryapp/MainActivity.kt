@@ -185,6 +185,8 @@ fun ProductItemScroll() {
 
             }
 
+            Spacer(modifier = Modifier.height(imageSize / 2))
+
             if (isThereDescription) {
                 Column(
                     Modifier
